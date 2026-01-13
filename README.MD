@@ -299,16 +299,16 @@ The style weight (1e4) is much larger than content weight (1) because:
 ### Comparison: L-BFGS vs Adam
 
 **L-BFGS:**
-- ✅ Faster convergence (fewer iterations needed)
-- ✅ Better quality results
-- ✅ More memory efficient for this problem
-- ❌ Requires closure function (more complex)
+-  Faster convergence (fewer iterations needed)
+-  Better quality results
+-  More memory efficient for this problem
+-  Requires closure function (more complex)
 
 **Adam:**
-- ✅ Simpler implementation
-- ✅ More iterations may be needed (3000+)
-- ❌ May not converge as well
-- ❌ Results may be less optimal
+-  Simpler implementation
+-  More iterations may be needed (3000+)
+-  May not converge as well
+-  Results may be less optimal
 
 The implementation uses L-BFGS as recommended in the original paper.
 
@@ -407,81 +407,6 @@ And creating a new image that has:
 - **Feature correlations**: Style is about which features appear together
 - **Texture representation**: Gram matrices naturally capture texture patterns
 
----
-
-## Limitations and Observations
-
-### What Works Well
-
-- ✅ Natural scenes and landscapes
-- ✅ Portraits and faces
-- ✅ Objects with clear structure
-- ✅ Artistic styles with strong textures
-
-### What Doesn't Work As Well
-
-- ❌ Very abstract content
-- ❌ Images with very different scales
-- ❌ When content and style are too dissimilar
-- ❌ Very fine details may be lost
-
-### Quality Factors
-
-1. **Image Size**: Larger images (up to 512px) generally work better
-2. **Style Strength**: Strong, distinctive styles transfer better
-3. **Content Clarity**: Clear, well-defined content preserves better
-4. **Iterations**: More iterations = better quality (up to a point)
-
----
-
-## Assignment Requirements (Question 3)
-
-This implementation addresses the following requirements:
-
-### 3.1 Loss Function [10 marks]
-
-✅ **Content Loss Function**:
-- Calculates squared difference between feature representations
-- Implemented for `conv_4` layer
-- Uses MSE loss between content and generated image features
-
-✅ **Style Loss Function**:
-- Computes Gram matrices for feature maps
-- Normalizes by `(C × H × W)`
-- Calculates MSE between style and generated Gram matrices
-- Sums losses from multiple style layers
-
-### 3.2 Gradient Descent [30 marks]
-
-✅ **L-BFGS Optimizer**:
-- Uses `torch.optim.LBFGS` as specified
-- Implements closure function for line search
-- Properly handles multiple function evaluations
-
-✅ **VGG19 Model**:
-- Loads pre-trained VGG19 from `torchvision.models`
-- Extracts features from specified layers
-- Computes both content and style losses
-
-✅ **Weight Configurations**:
-- Default: `content_weight=1`, `style_weight=1e4`
-- Can be modified to test different configurations
-- Weights ensure losses are of similar magnitude
-
-✅ **Image Constraints**:
-- Clamps pixel values to [0, 1] after each update
-- Ensures valid image output
-
-✅ **Adam Comparison**:
-- Code includes both L-BFGS and Adam implementations
-- Can compare results between optimizers
-
-✅ **Observations**:
-- Documents quality of output
-- Notes domains where transfer works/doesn't work
-
----
-
 ## Code Structure
 
 ### Main Functions
@@ -526,34 +451,3 @@ The `main()` function:
 
 ---
 
-## Future Improvements
-
-Possible enhancements:
-- Support for different image sizes
-- Real-time style transfer
-- Multiple style images
-- Style interpolation
-- Faster optimization methods
-- GPU memory optimization
-
----
-
-## References
-
-1. Gatys, L. A., Ecker, A. S., & Bethge, M. (2016). [Image Style Transfer Using Convolutional Neural Networks](https://arxiv.org/abs/1508.06576). CVPR 2016.
-
-2. PyTorch Documentation: [torchvision.models](https://pytorch.org/vision/stable/models.html)
-
-3. Assignment: Computer Vision - Spring 25, Assignment 2, Question 3
-
----
-
-## License
-
-This implementation is for educational purposes as part of a computer vision course assignment.
-
----
-
-## Contact
-
-For questions or issues, please refer to the assignment guidelines or course materials.
